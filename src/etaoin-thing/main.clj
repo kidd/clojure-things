@@ -26,3 +26,14 @@
 ;; (println (get-book "The art of decision making" "helga drummond"))
 
 ;; (quit driver)
+
+(defn wikipedia-table []
+  (go driver "https://wikipedia.org/wiki/Clojure")
+  (let [wikitable (query driver {:css "table.infobox.vevent tbody"})
+       children-els (children driver wikitable {:css "tr"})]
+   (for [row children-els
+         :let [text (try (get-element-text-el driver
+                                              (child driver row {:css "th"}))
+                         (catch Throwable e ""))]
+         :when (= "Family" text)]
+     (get-element-text-el driver (child driver row {:css "td"})))))

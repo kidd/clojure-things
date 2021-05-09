@@ -6,6 +6,12 @@
          reifyhealth/specmonstah           {:mvn/version "2.0.0"}
          clojure-lanterna/clojure-lanterna {:mvn/version "0.9.7"}
          etaoin/etaoin                     {:mvn/version "0.4.1"}
+         msolli/proletarian                {:mvn/version "1.0.32-alpha"}
+         com.github.seancorfield/next.jdbc {:mvn/version "1.2.659"}
+         org.postgresql/postgresql         {:mvn/version "42.2.10"}
+         integrant/integrant               {:mvn/version "0.8.0"}
+
+
          ;; metamerge/metamerge               {:mvn/version "1.0.0"}
          ;; integrant/integrant               {:mvn/version "0.8.0"}
          ;; duct/duct {:mvn/version "0.12.2"}
