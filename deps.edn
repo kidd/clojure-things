@@ -10,6 +10,7 @@
          com.github.seancorfield/next.jdbc {:mvn/version "1.2.659"}
          org.postgresql/postgresql         {:mvn/version "42.2.10"}
          integrant/integrant               {:mvn/version "0.8.0"}
+         metasoarous/oz                    {:mvn/version "1.6.0-alpha34"}
 
 
          ;; metamerge/metamerge               {:mvn/version "1.0.0"}
