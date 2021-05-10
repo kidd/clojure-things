@@ -1,5 +1,6 @@
 ;; https://www.sweettooth.dev/endpoint/dev/architecture/integrant-tutorial.html
 ;; https://www.youtube.com/playlist?list=PLb5SjnGEsSJdJnbjxVWci1P7mKY-K1ExD
+;; https://github.com/prestancedesign/usermanager-reitit-integrant-example/
 (ns integrant-things.main
   (:require [integrant.core :as ig]))
 
