@@ -1,0 +1,66 @@
+* clojure
+** start an app
+*** lein
+    =lein new app foo=
+    =lein repl=
+    =lein run=
+*** deps.edn
+** deps.edn
+   - http://www.futurile.net/2020/03/07/clojure-lein-dev-experience-and-repl-tools/
+   - https://www.manueluberti.eu/programming/2018/11/14/deps-shadow-cljs/
+** tutorials
+    - cljs re-frame: https://www.youtube.com/user/VideosDanA
+    - integrant: https://www.youtube.com/playlist?list=PLb5SjnGEsSJdJnbjxVWci1P7mKY-K1ExD
+** shadow-cljs
+   https://jiyinyiyong.medium.com/a-beginner-guide-to-compile-clojurescript-with-shadow-cljs-26369190b786
+   Shadow-cljs is a tool, like make, or denom. Or lein. That builds
+   packages. Like lein it does the building of the pipeline, but
+   unlike lein, it also has the hot reload thing. So it's like
+   lein+repl-with-hotreload.
+
+   Figwheel and figwheel-main are alternatives to it, but they are
+   basically substitutes one for the other.
+
+   Clojurescript has shitloads of repls,
+   https://lambdaisland.com/guides/clojure-repls/clojurescript-repls#org8300646
+   .At this point, I dont' know if shadow-cljs provides its own repl
+   mechanism, or it's on you to say "shadow-cljs, I want you to use
+   rhino as a repl".
+   https://clojureverse.org/t/what-is-the-difference-between-figwheel-main-and-figwheel-sidecar/6832
+** etaoin
+   selenium-like. just from clojure/babashka.
+** string to uuid in postgres pg
+   #+begin_src clojure
+     (ns foo.bar
+      (:import java.util.UUID))
+     (tdb/update-where! 'Product {:id id} :user-id (java.util.UUID/fromString new-window-id)))
+
+   #+end_src
+** add libs live
+   To add libraries live you need the combination of 3 things:
+   - lein
+   - clj-commons/pomegranate
+   - https://www.eigenbahn.com/2020/05/06/fast-clojure-deps-auto-reload
+   - https://github.com/clj-commons/pomegranate
+   - https://github.com/clojure/tools.trace
+   - https://github.com/philoskim/debux
+   - https://eli.thegreenplace.net/2017/notes-on-debugging-clojure-code/
+   - https://cognitect.com/blog/2017/6/5/repl-debugging-no-stacktrace-required
+** indentation
+   :PROPERTIES:
+   :CUSTOM_ID: 2d3b5ab6-8c01-46fd-9443-e21f25a2af8c
+   :END:
+   - https://github.com/kkinnear/zprint
+   - clj-rewrite
+   - babashka stuff?
+** lein test
+   :PROPERTIES:
+   :CUSTOM_ID: 2134230d-d0a7-430f-bff1-9f301a2306b1
+   :END:
+   lein test :only my.namespace/my-test
+   lein test :only my.namespace
+** unalias
+   :PROPERTIES:
+   :CUSTOM_ID: e864f2cc-92b1-4c6b-ab13-c52457774398
+   :END:
+   (ns-unalias *ns* 't)

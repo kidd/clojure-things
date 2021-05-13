@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-05-13 Thu 19:56 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org3a488ca">1. clojure</a>
+<ul>
+<li><a href="#org0d21302">1.1. start an app</a>
+<ul>
+<li><a href="#orgbe97b97">1.1.1. lein</a></li>
+<li><a href="#org076f84c">1.1.2. deps.edn</a></li>
+</ul>
+</li>
+<li><a href="#org6c16faf">1.2. deps.edn</a></li>
+<li><a href="#org0e5af12">1.3. tutorials</a></li>
+<li><a href="#orgf627f3d">1.4. shadow-cljs</a></li>
+<li><a href="#orgc85005c">1.5. etaoin</a></li>
+<li><a href="#orged30d0b">1.6. string to uuid in postgres pg</a></li>
+<li><a href="#orge35466a">1.7. add libs live</a></li>
+<li><a href="#2d3b5ab6-8c01-46fd-9443-e21f25a2af8c">1.8. indentation</a></li>
+<li><a href="#2134230d-d0a7-430f-bff1-9f301a2306b1">1.9. lein test</a></li>
+<li><a href="#e864f2cc-92b1-4c6b-ab13-c52457774398">1.10. unalias</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3a488ca" class="outline-2">
+<h2 id="org3a488ca"><span class="section-number-2">1</span> clojure</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org0d21302" class="outline-3">
+<h3 id="org0d21302"><span class="section-number-3">1.1</span> start an app</h3>
+<div class="outline-text-3" id="text-1-1">
+</div>
+<div id="outline-container-orgbe97b97" class="outline-4">
+<h4 id="orgbe97b97"><span class="section-number-4">1.1.1</span> lein</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+<code>lein new app foo</code>
+<code>lein repl</code>
+<code>lein run</code>
+</p>
+</div>
+</div>
+<div id="outline-container-org076f84c" class="outline-4">
+<h4 id="org076f84c"><span class="section-number-4">1.1.2</span> deps.edn</h4>
+</div>
+</div>
+<div id="outline-container-org6c16faf" class="outline-3">
+<h3 id="org6c16faf"><span class="section-number-3">1.2</span> deps.edn</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li><a href="http://www.futurile.net/2020/03/07/clojure-lein-dev-experience-and-repl-tools/">http://www.futurile.net/2020/03/07/clojure-lein-dev-experience-and-repl-tools/</a></li>
+<li><a href="https://www.manueluberti.eu/programming/2018/11/14/deps-shadow-cljs/">https://www.manueluberti.eu/programming/2018/11/14/deps-shadow-cljs/</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org0e5af12" class="outline-3">
+<h3 id="org0e5af12"><span class="section-number-3">1.3</span> tutorials</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li>cljs re-frame: <a href="https://www.youtube.com/user/VideosDanA">https://www.youtube.com/user/VideosDanA</a></li>
+<li>integrant: <a href="https://www.youtube.com/playlist?list=PLb5SjnGEsSJdJnbjxVWci1P7mKY-K1ExD">https://www.youtube.com/playlist?list=PLb5SjnGEsSJdJnbjxVWci1P7mKY-K1ExD</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgf627f3d" class="outline-3">
+<h3 id="orgf627f3d"><span class="section-number-3">1.4</span> shadow-cljs</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+<a href="https://jiyinyiyong.medium.com/a-beginner-guide-to-compile-clojurescript-with-shadow-cljs-26369190b786">https://jiyinyiyong.medium.com/a-beginner-guide-to-compile-clojurescript-with-shadow-cljs-26369190b786</a>
+Shadow-cljs is a tool, like make, or denom. Or lein. That builds
+packages. Like lein it does the building of the pipeline, but
+unlike lein, it also has the hot reload thing. So it's like
+lein+repl-with-hotreload.
+</p>
+
+<p>
+Figwheel and figwheel-main are alternatives to it, but they are
+basically substitutes one for the other.
+</p>
+
+<p>
+Clojurescript has shitloads of repls,
+<a href="https://lambdaisland.com/guides/clojure-repls/clojurescript-repls#org8300646">https://lambdaisland.com/guides/clojure-repls/clojurescript-repls#org8300646</a>
+.At this point, I dont' know if shadow-cljs provides its own repl
+mechanism, or it's on you to say "shadow-cljs, I want you to use
+rhino as a repl".
+<a href="https://clojureverse.org/t/what-is-the-difference-between-figwheel-main-and-figwheel-sidecar/6832">https://clojureverse.org/t/what-is-the-difference-between-figwheel-main-and-figwheel-sidecar/6832</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orgc85005c" class="outline-3">
+<h3 id="orgc85005c"><span class="section-number-3">1.5</span> etaoin</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+selenium-like. just from clojure/babashka.
+</p>
+</div>
+</div>
+<div id="outline-container-orged30d0b" class="outline-3">
+<h3 id="orged30d0b"><span class="section-number-3">1.6</span> string to uuid in postgres pg</h3>
+<div class="outline-text-3" id="text-1-6">
+<div class="org-src-container">
+<pre class="src src-clojure">(ns foo.bar
+ (:import java.util.UUID))
+(tdb/update-where! 'Product {:id id} :user-id (java.util.UUID/fromString new-window-id)))
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge35466a" class="outline-3">
+<h3 id="orge35466a"><span class="section-number-3">1.7</span> add libs live</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+To add libraries live you need the combination of 3 things:
+</p>
+<ul class="org-ul">
+<li>lein</li>
+<li>clj-commons/pomegranate</li>
+<li><a href="https://www.eigenbahn.com/2020/05/06/fast-clojure-deps-auto-reload">https://www.eigenbahn.com/2020/05/06/fast-clojure-deps-auto-reload</a></li>
+<li><a href="https://github.com/clj-commons/pomegranate">https://github.com/clj-commons/pomegranate</a></li>
+<li><a href="https://github.com/clojure/tools.trace">https://github.com/clojure/tools.trace</a></li>
+<li><a href="https://github.com/philoskim/debux">https://github.com/philoskim/debux</a></li>
+<li><a href="https://eli.thegreenplace.net/2017/notes-on-debugging-clojure-code/">https://eli.thegreenplace.net/2017/notes-on-debugging-clojure-code/</a></li>
+<li><a href="https://cognitect.com/blog/2017/6/5/repl-debugging-no-stacktrace-required">https://cognitect.com/blog/2017/6/5/repl-debugging-no-stacktrace-required</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org7dd1b93" class="outline-3">
+<h3 id="2d3b5ab6-8c01-46fd-9443-e21f25a2af8c"><a id="org7dd1b93"></a><span class="section-number-3">1.8</span> indentation</h3>
+<div class="outline-text-3" id="text-2d3b5ab6-8c01-46fd-9443-e21f25a2af8c">
+<ul class="org-ul">
+<li><a href="https://github.com/kkinnear/zprint">https://github.com/kkinnear/zprint</a></li>
+<li>clj-rewrite</li>
+<li>babashka stuff?</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd88ec30" class="outline-3">
+<h3 id="2134230d-d0a7-430f-bff1-9f301a2306b1"><a id="orgd88ec30"></a><span class="section-number-3">1.9</span> lein test</h3>
+<div class="outline-text-3" id="text-2134230d-d0a7-430f-bff1-9f301a2306b1">
+<p>
+lein test :only my.namespace/my-test
+lein test :only my.namespace
+</p>
+</div>
+</div>
+<div id="outline-container-orga21140a" class="outline-3">
+<h3 id="e864f2cc-92b1-4c6b-ab13-c52457774398"><a id="orga21140a"></a><span class="section-number-3">1.10</span> unalias</h3>
+<div class="outline-text-3" id="text-e864f2cc-92b1-4c6b-ab13-c52457774398">
+<p>
+(ns-unalias <b>ns</b> 't)
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2021-05-13 Thu 19:56</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
