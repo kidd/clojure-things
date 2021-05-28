@@ -5,11 +5,21 @@
     =lein repl=
     =lein run=
 *** deps.edn
+*** cljs
+    #+begin_src bash
+    lein new re-frame foobar +10x
+    edit shadow-cljs.edn add lib
+    npx shadow-cljs watch app
+    cider-connect-cljs local 7888 shadow-select :app .
+    #+end_src
+
 ** deps.edn
    - http://www.futurile.net/2020/03/07/clojure-lein-dev-experience-and-repl-tools/
    - https://www.manueluberti.eu/programming/2018/11/14/deps-shadow-cljs/
 ** tutorials
     - cljs re-frame: https://www.youtube.com/user/VideosDanA
+    - spa re-frame: https://www.youtube.com/watch?v=yVb8PS6a4Mk&t=666s
+    - TODO in cljs https://www.youtube.com/watch?v=jAkw6Wb-rTA
     - integrant: https://www.youtube.com/playlist?list=PLb5SjnGEsSJdJnbjxVWci1P7mKY-K1ExD
 ** shadow-cljs
    https://jiyinyiyong.medium.com/a-beginner-guide-to-compile-clojurescript-with-shadow-cljs-26369190b786
@@ -64,3 +74,66 @@
    :CUSTOM_ID: e864f2cc-92b1-4c6b-ab13-c52457774398
    :END:
    (ns-unalias *ns* 't)
+** socket repl
+   #+begin_src bash
+     java -Dclojure.server.repl={:port 6666 :accept clojure.core.server/repl} -jar target/uberjar/myuberjar.jar
+     #notice in project.clj there's a :socket profile as well that i use for local dev
+   #+end_src
+** clojure by example
+   https://news.ycombinator.com/item?id=27273911
+** add conditionally to a map
+  (merge base-map
+     (when name
+        {:name name}
+     (when address
+        {:address address})
+
+  similar to CL's `(:a 1 ,@(when foo `(:b 2)))
+** subsets
+   A set is a map with values equal to keys.
+
+   Creating a map from a set is trivial, you get {:a :a, :b :b ....}
+
+   maps can be converted to sets, and the elements are vectors of [k v]
+   #+begin_src clojure
+     (set [1 2])                               ; #{1 2}
+     (set {:a 1})                              ; #{[:a 1]}
+     (set {:a 1})                              ; #{[:a 1]}
+     (set/subset? (set {:a 1}) (set {:a 1}))   ; true
+     (set/subset? (set {:a 1}) (set {:a 2}))   ; false
+     (set/subset? (set {:a 1}) (set [:a 1]))   ; false
+     (set/subset? (set {:a 1}) (set [:a 1]))   ; false
+     (set [:a 1])                              ; #{1 :a}
+     (set [:a :a])                             ; #{:a}
+     (set [[:a 1]])                            ; #{[:a 1]}
+     (set/subset? (set {:a 1}) (set [:a 1]))   ; false
+     (set/subset? (set {:a 1}) (set [[:a 1]])) ; true
+     (set {1 :a})                              ; #{[1 :a]}
+     (into {} (set {:a 1}))                   ; {:a 1}
+   #+end_src
+
+   Even thought there might be a way to create a hash from a set like
+   this =(fun #{:a}) ; => {:a :a}= that would mean that you can
+   prepare a set and a hash that would be "equal", but from what I see
+   above, conversions between maps and sets work neatly.
+
+   #+begin_src clojure
+     (set/subset? (set {:a 1}) #{:a})
+     (set/subset? #{:a}        (set {:a 1}) )
+     (set/subset? #{:a}        (set [:a]) )
+     (set/subset? (set [:a])   #{:a})
+     (set/subset? (set [:a])   #{:a})
+     ...
+     (set/subset? (set {:a 1}) (set [[:a 1]])); true
+     (set/subset? (set {:a 1}) (set [:a 1])); false
+     {:a 1} (into {} [[:a 1]]); {:a 1}{:a 1}
+   #+end_src
+** Where did I leave that stuff?
+   So, I'm debugging something, and I use the inspector to retain some value I want for later.
+   =d myvar= will save that value as =myvar= in the current namespace you're in.
+
+   Later on, you move namespace and you want to get back that =myvar=
+   but you don't remember where it was stored.
+
+   =cider-apropos myvar= will list you which ns have this defined. so
+   you can go and fetch it from there.

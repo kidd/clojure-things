@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-13 Thu 19:56 -->
+<!-- 2021-05-28 Fri 11:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -232,38 +232,44 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3a488ca">1. clojure</a>
+<li><a href="#org4e3e5c2">1. clojure</a>
 <ul>
-<li><a href="#org0d21302">1.1. start an app</a>
+<li><a href="#org28165d4">1.1. start an app</a>
 <ul>
-<li><a href="#orgbe97b97">1.1.1. lein</a></li>
-<li><a href="#org076f84c">1.1.2. deps.edn</a></li>
+<li><a href="#org9576a88">1.1.1. lein</a></li>
+<li><a href="#org269ad1b">1.1.2. deps.edn</a></li>
+<li><a href="#org3a85642">1.1.3. cljs</a></li>
 </ul>
 </li>
-<li><a href="#org6c16faf">1.2. deps.edn</a></li>
-<li><a href="#org0e5af12">1.3. tutorials</a></li>
-<li><a href="#orgf627f3d">1.4. shadow-cljs</a></li>
-<li><a href="#orgc85005c">1.5. etaoin</a></li>
-<li><a href="#orged30d0b">1.6. string to uuid in postgres pg</a></li>
-<li><a href="#orge35466a">1.7. add libs live</a></li>
+<li><a href="#orgaf39644">1.2. deps.edn</a></li>
+<li><a href="#orgb7b4b2d">1.3. tutorials</a></li>
+<li><a href="#org46673fb">1.4. shadow-cljs</a></li>
+<li><a href="#org18012d5">1.5. etaoin</a></li>
+<li><a href="#orgf5e040a">1.6. string to uuid in postgres pg</a></li>
+<li><a href="#org43c6d41">1.7. add libs live</a></li>
 <li><a href="#2d3b5ab6-8c01-46fd-9443-e21f25a2af8c">1.8. indentation</a></li>
 <li><a href="#2134230d-d0a7-430f-bff1-9f301a2306b1">1.9. lein test</a></li>
 <li><a href="#e864f2cc-92b1-4c6b-ab13-c52457774398">1.10. unalias</a></li>
+<li><a href="#org2df1aa9">1.11. socket repl</a></li>
+<li><a href="#orgeb08993">1.12. clojure by example</a></li>
+<li><a href="#org815dd95">1.13. add conditionally to a map</a></li>
+<li><a href="#orgc2554d1">1.14. subsets</a></li>
+<li><a href="#orgd9c59f8">1.15. Where did I leave that stuff?</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org3a488ca" class="outline-2">
-<h2 id="org3a488ca"><span class="section-number-2">1</span> clojure</h2>
+<div id="outline-container-org4e3e5c2" class="outline-2">
+<h2 id="org4e3e5c2"><span class="section-number-2">1</span> clojure</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org0d21302" class="outline-3">
-<h3 id="org0d21302"><span class="section-number-3">1.1</span> start an app</h3>
+<div id="outline-container-org28165d4" class="outline-3">
+<h3 id="org28165d4"><span class="section-number-3">1.1</span> start an app</h3>
 <div class="outline-text-3" id="text-1-1">
 </div>
-<div id="outline-container-orgbe97b97" class="outline-4">
-<h4 id="orgbe97b97"><span class="section-number-4">1.1.1</span> lein</h4>
+<div id="outline-container-org9576a88" class="outline-4">
+<h4 id="org9576a88"><span class="section-number-4">1.1.1</span> lein</h4>
 <div class="outline-text-4" id="text-1-1-1">
 <p>
 <code>lein new app foo</code>
@@ -272,12 +278,25 @@ for the JavaScript code in this tag.
 </p>
 </div>
 </div>
-<div id="outline-container-org076f84c" class="outline-4">
-<h4 id="org076f84c"><span class="section-number-4">1.1.2</span> deps.edn</h4>
+<div id="outline-container-org269ad1b" class="outline-4">
+<h4 id="org269ad1b"><span class="section-number-4">1.1.2</span> deps.edn</h4>
+</div>
+<div id="outline-container-org3a85642" class="outline-4">
+<h4 id="org3a85642"><span class="section-number-4">1.1.3</span> cljs</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<div class="org-src-container">
+<pre class="src src-bash">lein new re-frame foobar +10x
+edit shadow-cljs.edn add lib
+npx shadow-cljs watch app
+cider-connect-cljs local 7888 shadow-select :app .
+</pre>
 </div>
 </div>
-<div id="outline-container-org6c16faf" class="outline-3">
-<h3 id="org6c16faf"><span class="section-number-3">1.2</span> deps.edn</h3>
+</div>
+</div>
+
+<div id="outline-container-orgaf39644" class="outline-3">
+<h3 id="orgaf39644"><span class="section-number-3">1.2</span> deps.edn</h3>
 <div class="outline-text-3" id="text-1-2">
 <ul class="org-ul">
 <li><a href="http://www.futurile.net/2020/03/07/clojure-lein-dev-experience-and-repl-tools/">http://www.futurile.net/2020/03/07/clojure-lein-dev-experience-and-repl-tools/</a></li>
@@ -285,17 +304,19 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
-<div id="outline-container-org0e5af12" class="outline-3">
-<h3 id="org0e5af12"><span class="section-number-3">1.3</span> tutorials</h3>
+<div id="outline-container-orgb7b4b2d" class="outline-3">
+<h3 id="orgb7b4b2d"><span class="section-number-3">1.3</span> tutorials</h3>
 <div class="outline-text-3" id="text-1-3">
 <ul class="org-ul">
 <li>cljs re-frame: <a href="https://www.youtube.com/user/VideosDanA">https://www.youtube.com/user/VideosDanA</a></li>
+<li>spa re-frame: <a href="https://www.youtube.com/watch?v=yVb8PS6a4Mk&amp;t=666s">https://www.youtube.com/watch?v=yVb8PS6a4Mk&amp;t=666s</a></li>
+<li>TODO in cljs <a href="https://www.youtube.com/watch?v=jAkw6Wb-rTA">https://www.youtube.com/watch?v=jAkw6Wb-rTA</a></li>
 <li>integrant: <a href="https://www.youtube.com/playlist?list=PLb5SjnGEsSJdJnbjxVWci1P7mKY-K1ExD">https://www.youtube.com/playlist?list=PLb5SjnGEsSJdJnbjxVWci1P7mKY-K1ExD</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf627f3d" class="outline-3">
-<h3 id="orgf627f3d"><span class="section-number-3">1.4</span> shadow-cljs</h3>
+<div id="outline-container-org46673fb" class="outline-3">
+<h3 id="org46673fb"><span class="section-number-3">1.4</span> shadow-cljs</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 <a href="https://jiyinyiyong.medium.com/a-beginner-guide-to-compile-clojurescript-with-shadow-cljs-26369190b786">https://jiyinyiyong.medium.com/a-beginner-guide-to-compile-clojurescript-with-shadow-cljs-26369190b786</a>
@@ -320,16 +341,16 @@ rhino as a repl".
 </p>
 </div>
 </div>
-<div id="outline-container-orgc85005c" class="outline-3">
-<h3 id="orgc85005c"><span class="section-number-3">1.5</span> etaoin</h3>
+<div id="outline-container-org18012d5" class="outline-3">
+<h3 id="org18012d5"><span class="section-number-3">1.5</span> etaoin</h3>
 <div class="outline-text-3" id="text-1-5">
 <p>
 selenium-like. just from clojure/babashka.
 </p>
 </div>
 </div>
-<div id="outline-container-orged30d0b" class="outline-3">
-<h3 id="orged30d0b"><span class="section-number-3">1.6</span> string to uuid in postgres pg</h3>
+<div id="outline-container-orgf5e040a" class="outline-3">
+<h3 id="orgf5e040a"><span class="section-number-3">1.6</span> string to uuid in postgres pg</h3>
 <div class="outline-text-3" id="text-1-6">
 <div class="org-src-container">
 <pre class="src src-clojure">(ns foo.bar
@@ -340,8 +361,8 @@ selenium-like. just from clojure/babashka.
 </div>
 </div>
 </div>
-<div id="outline-container-orge35466a" class="outline-3">
-<h3 id="orge35466a"><span class="section-number-3">1.7</span> add libs live</h3>
+<div id="outline-container-org43c6d41" class="outline-3">
+<h3 id="org43c6d41"><span class="section-number-3">1.7</span> add libs live</h3>
 <div class="outline-text-3" id="text-1-7">
 <p>
 To add libraries live you need the combination of 3 things:
@@ -358,8 +379,8 @@ To add libraries live you need the combination of 3 things:
 </ul>
 </div>
 </div>
-<div id="outline-container-org7dd1b93" class="outline-3">
-<h3 id="2d3b5ab6-8c01-46fd-9443-e21f25a2af8c"><a id="org7dd1b93"></a><span class="section-number-3">1.8</span> indentation</h3>
+<div id="outline-container-org315b212" class="outline-3">
+<h3 id="2d3b5ab6-8c01-46fd-9443-e21f25a2af8c"><a id="org315b212"></a><span class="section-number-3">1.8</span> indentation</h3>
 <div class="outline-text-3" id="text-2d3b5ab6-8c01-46fd-9443-e21f25a2af8c">
 <ul class="org-ul">
 <li><a href="https://github.com/kkinnear/zprint">https://github.com/kkinnear/zprint</a></li>
@@ -368,8 +389,8 @@ To add libraries live you need the combination of 3 things:
 </ul>
 </div>
 </div>
-<div id="outline-container-orgd88ec30" class="outline-3">
-<h3 id="2134230d-d0a7-430f-bff1-9f301a2306b1"><a id="orgd88ec30"></a><span class="section-number-3">1.9</span> lein test</h3>
+<div id="outline-container-org3ff8cd0" class="outline-3">
+<h3 id="2134230d-d0a7-430f-bff1-9f301a2306b1"><a id="org3ff8cd0"></a><span class="section-number-3">1.9</span> lein test</h3>
 <div class="outline-text-3" id="text-2134230d-d0a7-430f-bff1-9f301a2306b1">
 <p>
 lein test :only my.namespace/my-test
@@ -377,18 +398,124 @@ lein test :only my.namespace
 </p>
 </div>
 </div>
-<div id="outline-container-orga21140a" class="outline-3">
-<h3 id="e864f2cc-92b1-4c6b-ab13-c52457774398"><a id="orga21140a"></a><span class="section-number-3">1.10</span> unalias</h3>
+<div id="outline-container-orgedafc42" class="outline-3">
+<h3 id="e864f2cc-92b1-4c6b-ab13-c52457774398"><a id="orgedafc42"></a><span class="section-number-3">1.10</span> unalias</h3>
 <div class="outline-text-3" id="text-e864f2cc-92b1-4c6b-ab13-c52457774398">
 <p>
 (ns-unalias <b>ns</b> 't)
 </p>
 </div>
 </div>
+<div id="outline-container-org2df1aa9" class="outline-3">
+<h3 id="org2df1aa9"><span class="section-number-3">1.11</span> socket repl</h3>
+<div class="outline-text-3" id="text-1-11">
+<div class="org-src-container">
+<pre class="src src-bash">java -Dclojure.server.repl={:port 6666 :accept clojure.core.server/repl} -jar target/uberjar/myuberjar.jar
+<span style="font-weight: bold; font-style: italic;">#</span><span style="font-weight: bold; font-style: italic;">notice in project.clj there's a :socket profile as well that i use for local dev</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgeb08993" class="outline-3">
+<h3 id="orgeb08993"><span class="section-number-3">1.12</span> clojure by example</h3>
+<div class="outline-text-3" id="text-1-12">
+<p>
+<a href="https://news.ycombinator.com/item?id=27273911">https://news.ycombinator.com/item?id=27273911</a>
+</p>
+</div>
+</div>
+<div id="outline-container-org815dd95" class="outline-3">
+<h3 id="org815dd95"><span class="section-number-3">1.13</span> add conditionally to a map</h3>
+<div class="outline-text-3" id="text-1-13">
+<p>
+(merge base-map
+   (when name
+      {:name name}
+   (when address
+      {:address address})
+</p>
+
+<p>
+similar to CL's `(:a 1 ,@(when foo `(:b 2)))
+</p>
+</div>
+</div>
+<div id="outline-container-orgc2554d1" class="outline-3">
+<h3 id="orgc2554d1"><span class="section-number-3">1.14</span> subsets</h3>
+<div class="outline-text-3" id="text-1-14">
+<p>
+A set is a map with values equal to keys.
+</p>
+
+<p>
+Creating a map from a set is trivial, you get {:a :a, :b :b &#x2026;.}
+</p>
+
+<p>
+maps can be converted to sets, and the elements are vectors of [k v]
+</p>
+<div class="org-src-container">
+<pre class="src src-clojure">(set [1 2])                               ; #{1 2}
+(set {:a 1})                              ; #{[:a 1]}
+(set {:a 1})                              ; #{[:a 1]}
+(set/subset? (set {:a 1}) (set {:a 1}))   ; true
+(set/subset? (set {:a 1}) (set {:a 2}))   ; false
+(set/subset? (set {:a 1}) (set [:a 1]))   ; false
+(set/subset? (set {:a 1}) (set [:a 1]))   ; false
+(set [:a 1])                              ; #{1 :a}
+(set [:a :a])                             ; #{:a}
+(set [[:a 1]])                            ; #{[:a 1]}
+(set/subset? (set {:a 1}) (set [:a 1]))   ; false
+(set/subset? (set {:a 1}) (set [[:a 1]])) ; true
+(set {1 :a})                              ; #{[1 :a]}
+(into {} (set {:a 1}))                   ; {:a 1}
+</pre>
+</div>
+
+<p>
+Even thought there might be a way to create a hash from a set like
+this <code>(fun #{:a}) ; =&gt; {:a :a}</code> that would mean that you can
+prepare a set and a hash that would be "equal", but from what I see
+above, conversions between maps and sets work neatly.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure">(set/subset? (set {:a 1}) #{:a})
+(set/subset? #{:a}        (set {:a 1}) )
+(set/subset? #{:a}        (set [:a]) )
+(set/subset? (set [:a])   #{:a})
+(set/subset? (set [:a])   #{:a})
+...
+(set/subset? (set {:a 1}) (set [[:a 1]])); true
+(set/subset? (set {:a 1}) (set [:a 1])); false
+{:a 1} (into {} [[:a 1]]); {:a 1}{:a 1}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd9c59f8" class="outline-3">
+<h3 id="orgd9c59f8"><span class="section-number-3">1.15</span> Where did I leave that stuff?</h3>
+<div class="outline-text-3" id="text-1-15">
+<p>
+So, I'm debugging something, and I use the inspector to retain some value I want for later.
+<code>d myvar</code> will save that value as <code>myvar</code> in the current namespace you're in.
+</p>
+
+<p>
+Later on, you move namespace and you want to get back that <code>myvar</code>
+but you don't remember where it was stored.
+</p>
+
+<p>
+<code>cider-apropos myvar</code> will list you which ns have this defined. so
+you can go and fetch it from there.
+</p>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2021-05-13 Thu 19:56</p>
+<p class="date">Created: 2021-05-28 Fri 11:11</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
