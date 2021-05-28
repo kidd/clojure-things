@@ -1,3 +1,20 @@
+#+TITLE: Clojure things I learn
+#+AUTHOR: Raimon Grau
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:nil arch:headline
+#+OPTIONS: author:t c:nil creator:comment d:(not "LOGBOOK") date:nil
+#+OPTIONS: e:t email:nil f:t inline:t p:nil pri:nil stat:t
+#+OPTIONS: tags:t tasks:t tex:t timestamp:t todo:t |:t
+#+EXCLUDE_TAGS: noexport
+#+KEYWORDS: bash zsh shell
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+#+OPTIONS: reveal_center:nil timestamp:nil
+#+REVEAL_THEME: black
+
+# toc:nil num:nil
 * clojure
 ** start an app
 *** lein
