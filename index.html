@@ -3,11 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-28 Fri 11:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>&lrm;</title>
+<title>Clojure things I learn</title>
 <meta name="generator" content="Org mode" />
+<meta name="author" content="Raimon Grau" />
+<meta name="keywords" content="bash zsh shell" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -179,6 +180,12 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -228,48 +235,49 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
+<h1 class="title">Clojure things I learn</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4e3e5c2">1. clojure</a>
+<li><a href="#org5294bf2">1. clojure</a>
 <ul>
-<li><a href="#org28165d4">1.1. start an app</a>
+<li><a href="#orgb3e82f6">1.1. start an app</a>
 <ul>
-<li><a href="#org9576a88">1.1.1. lein</a></li>
-<li><a href="#org269ad1b">1.1.2. deps.edn</a></li>
-<li><a href="#org3a85642">1.1.3. cljs</a></li>
+<li><a href="#orgea4a8b2">1.1.1. lein</a></li>
+<li><a href="#orgd3dc16b">1.1.2. deps.edn</a></li>
+<li><a href="#org5f68ed7">1.1.3. cljs</a></li>
 </ul>
 </li>
-<li><a href="#orgaf39644">1.2. deps.edn</a></li>
-<li><a href="#orgb7b4b2d">1.3. tutorials</a></li>
-<li><a href="#org46673fb">1.4. shadow-cljs</a></li>
-<li><a href="#org18012d5">1.5. etaoin</a></li>
-<li><a href="#orgf5e040a">1.6. string to uuid in postgres pg</a></li>
-<li><a href="#org43c6d41">1.7. add libs live</a></li>
+<li><a href="#org8bd873f">1.2. deps.edn</a></li>
+<li><a href="#orge550371">1.3. tutorials</a></li>
+<li><a href="#org991ee79">1.4. shadow-cljs</a></li>
+<li><a href="#orgebb273e">1.5. etaoin</a></li>
+<li><a href="#org0f52033">1.6. string to uuid in postgres pg</a></li>
+<li><a href="#org3777bc4">1.7. add libs live</a></li>
 <li><a href="#2d3b5ab6-8c01-46fd-9443-e21f25a2af8c">1.8. indentation</a></li>
 <li><a href="#2134230d-d0a7-430f-bff1-9f301a2306b1">1.9. lein test</a></li>
 <li><a href="#e864f2cc-92b1-4c6b-ab13-c52457774398">1.10. unalias</a></li>
-<li><a href="#org2df1aa9">1.11. socket repl</a></li>
-<li><a href="#orgeb08993">1.12. clojure by example</a></li>
-<li><a href="#org815dd95">1.13. add conditionally to a map</a></li>
-<li><a href="#orgc2554d1">1.14. subsets</a></li>
-<li><a href="#orgd9c59f8">1.15. Where did I leave that stuff?</a></li>
+<li><a href="#org4f7cd1e">1.11. socket repl</a></li>
+<li><a href="#org1aed45c">1.12. clojure by example</a></li>
+<li><a href="#org75ec59c">1.13. add conditionally to a map</a></li>
+<li><a href="#orgf484940">1.14. subsets</a></li>
+<li><a href="#org1b0785c">1.15. Where did I leave that stuff?</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org4e3e5c2" class="outline-2">
-<h2 id="org4e3e5c2"><span class="section-number-2">1</span> clojure</h2>
+<div id="outline-container-org5294bf2" class="outline-2">
+<h2 id="org5294bf2"><span class="section-number-2">1</span> clojure</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org28165d4" class="outline-3">
-<h3 id="org28165d4"><span class="section-number-3">1.1</span> start an app</h3>
+<div id="outline-container-orgb3e82f6" class="outline-3">
+<h3 id="orgb3e82f6"><span class="section-number-3">1.1</span> start an app</h3>
 <div class="outline-text-3" id="text-1-1">
 </div>
-<div id="outline-container-org9576a88" class="outline-4">
-<h4 id="org9576a88"><span class="section-number-4">1.1.1</span> lein</h4>
+<div id="outline-container-orgea4a8b2" class="outline-4">
+<h4 id="orgea4a8b2"><span class="section-number-4">1.1.1</span> lein</h4>
 <div class="outline-text-4" id="text-1-1-1">
 <p>
 <code>lein new app foo</code>
@@ -278,11 +286,11 @@ for the JavaScript code in this tag.
 </p>
 </div>
 </div>
-<div id="outline-container-org269ad1b" class="outline-4">
-<h4 id="org269ad1b"><span class="section-number-4">1.1.2</span> deps.edn</h4>
+<div id="outline-container-orgd3dc16b" class="outline-4">
+<h4 id="orgd3dc16b"><span class="section-number-4">1.1.2</span> deps.edn</h4>
 </div>
-<div id="outline-container-org3a85642" class="outline-4">
-<h4 id="org3a85642"><span class="section-number-4">1.1.3</span> cljs</h4>
+<div id="outline-container-org5f68ed7" class="outline-4">
+<h4 id="org5f68ed7"><span class="section-number-4">1.1.3</span> cljs</h4>
 <div class="outline-text-4" id="text-1-1-3">
 <div class="org-src-container">
 <pre class="src src-bash">lein new re-frame foobar +10x
@@ -295,8 +303,8 @@ cider-connect-cljs local 7888 shadow-select :app .
 </div>
 </div>
 
-<div id="outline-container-orgaf39644" class="outline-3">
-<h3 id="orgaf39644"><span class="section-number-3">1.2</span> deps.edn</h3>
+<div id="outline-container-org8bd873f" class="outline-3">
+<h3 id="org8bd873f"><span class="section-number-3">1.2</span> deps.edn</h3>
 <div class="outline-text-3" id="text-1-2">
 <ul class="org-ul">
 <li><a href="http://www.futurile.net/2020/03/07/clojure-lein-dev-experience-and-repl-tools/">http://www.futurile.net/2020/03/07/clojure-lein-dev-experience-and-repl-tools/</a></li>
@@ -304,8 +312,8 @@ cider-connect-cljs local 7888 shadow-select :app .
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb7b4b2d" class="outline-3">
-<h3 id="orgb7b4b2d"><span class="section-number-3">1.3</span> tutorials</h3>
+<div id="outline-container-orge550371" class="outline-3">
+<h3 id="orge550371"><span class="section-number-3">1.3</span> tutorials</h3>
 <div class="outline-text-3" id="text-1-3">
 <ul class="org-ul">
 <li>cljs re-frame: <a href="https://www.youtube.com/user/VideosDanA">https://www.youtube.com/user/VideosDanA</a></li>
@@ -315,8 +323,8 @@ cider-connect-cljs local 7888 shadow-select :app .
 </ul>
 </div>
 </div>
-<div id="outline-container-org46673fb" class="outline-3">
-<h3 id="org46673fb"><span class="section-number-3">1.4</span> shadow-cljs</h3>
+<div id="outline-container-org991ee79" class="outline-3">
+<h3 id="org991ee79"><span class="section-number-3">1.4</span> shadow-cljs</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 <a href="https://jiyinyiyong.medium.com/a-beginner-guide-to-compile-clojurescript-with-shadow-cljs-26369190b786">https://jiyinyiyong.medium.com/a-beginner-guide-to-compile-clojurescript-with-shadow-cljs-26369190b786</a>
@@ -341,16 +349,16 @@ rhino as a repl".
 </p>
 </div>
 </div>
-<div id="outline-container-org18012d5" class="outline-3">
-<h3 id="org18012d5"><span class="section-number-3">1.5</span> etaoin</h3>
+<div id="outline-container-orgebb273e" class="outline-3">
+<h3 id="orgebb273e"><span class="section-number-3">1.5</span> etaoin</h3>
 <div class="outline-text-3" id="text-1-5">
 <p>
 selenium-like. just from clojure/babashka.
 </p>
 </div>
 </div>
-<div id="outline-container-orgf5e040a" class="outline-3">
-<h3 id="orgf5e040a"><span class="section-number-3">1.6</span> string to uuid in postgres pg</h3>
+<div id="outline-container-org0f52033" class="outline-3">
+<h3 id="org0f52033"><span class="section-number-3">1.6</span> string to uuid in postgres pg</h3>
 <div class="outline-text-3" id="text-1-6">
 <div class="org-src-container">
 <pre class="src src-clojure">(ns foo.bar
@@ -361,8 +369,8 @@ selenium-like. just from clojure/babashka.
 </div>
 </div>
 </div>
-<div id="outline-container-org43c6d41" class="outline-3">
-<h3 id="org43c6d41"><span class="section-number-3">1.7</span> add libs live</h3>
+<div id="outline-container-org3777bc4" class="outline-3">
+<h3 id="org3777bc4"><span class="section-number-3">1.7</span> add libs live</h3>
 <div class="outline-text-3" id="text-1-7">
 <p>
 To add libraries live you need the combination of 3 things:
@@ -379,8 +387,8 @@ To add libraries live you need the combination of 3 things:
 </ul>
 </div>
 </div>
-<div id="outline-container-org315b212" class="outline-3">
-<h3 id="2d3b5ab6-8c01-46fd-9443-e21f25a2af8c"><a id="org315b212"></a><span class="section-number-3">1.8</span> indentation</h3>
+<div id="outline-container-orgc121bcb" class="outline-3">
+<h3 id="2d3b5ab6-8c01-46fd-9443-e21f25a2af8c"><a id="orgc121bcb"></a><span class="section-number-3">1.8</span> indentation</h3>
 <div class="outline-text-3" id="text-2d3b5ab6-8c01-46fd-9443-e21f25a2af8c">
 <ul class="org-ul">
 <li><a href="https://github.com/kkinnear/zprint">https://github.com/kkinnear/zprint</a></li>
@@ -389,8 +397,8 @@ To add libraries live you need the combination of 3 things:
 </ul>
 </div>
 </div>
-<div id="outline-container-org3ff8cd0" class="outline-3">
-<h3 id="2134230d-d0a7-430f-bff1-9f301a2306b1"><a id="org3ff8cd0"></a><span class="section-number-3">1.9</span> lein test</h3>
+<div id="outline-container-org691086f" class="outline-3">
+<h3 id="2134230d-d0a7-430f-bff1-9f301a2306b1"><a id="org691086f"></a><span class="section-number-3">1.9</span> lein test</h3>
 <div class="outline-text-3" id="text-2134230d-d0a7-430f-bff1-9f301a2306b1">
 <p>
 lein test :only my.namespace/my-test
@@ -398,16 +406,16 @@ lein test :only my.namespace
 </p>
 </div>
 </div>
-<div id="outline-container-orgedafc42" class="outline-3">
-<h3 id="e864f2cc-92b1-4c6b-ab13-c52457774398"><a id="orgedafc42"></a><span class="section-number-3">1.10</span> unalias</h3>
+<div id="outline-container-org2c07e4e" class="outline-3">
+<h3 id="e864f2cc-92b1-4c6b-ab13-c52457774398"><a id="org2c07e4e"></a><span class="section-number-3">1.10</span> unalias</h3>
 <div class="outline-text-3" id="text-e864f2cc-92b1-4c6b-ab13-c52457774398">
 <p>
 (ns-unalias <b>ns</b> 't)
 </p>
 </div>
 </div>
-<div id="outline-container-org2df1aa9" class="outline-3">
-<h3 id="org2df1aa9"><span class="section-number-3">1.11</span> socket repl</h3>
+<div id="outline-container-org4f7cd1e" class="outline-3">
+<h3 id="org4f7cd1e"><span class="section-number-3">1.11</span> socket repl</h3>
 <div class="outline-text-3" id="text-1-11">
 <div class="org-src-container">
 <pre class="src src-bash">java -Dclojure.server.repl={:port 6666 :accept clojure.core.server/repl} -jar target/uberjar/myuberjar.jar
@@ -416,16 +424,16 @@ lein test :only my.namespace
 </div>
 </div>
 </div>
-<div id="outline-container-orgeb08993" class="outline-3">
-<h3 id="orgeb08993"><span class="section-number-3">1.12</span> clojure by example</h3>
+<div id="outline-container-org1aed45c" class="outline-3">
+<h3 id="org1aed45c"><span class="section-number-3">1.12</span> clojure by example</h3>
 <div class="outline-text-3" id="text-1-12">
 <p>
 <a href="https://news.ycombinator.com/item?id=27273911">https://news.ycombinator.com/item?id=27273911</a>
 </p>
 </div>
 </div>
-<div id="outline-container-org815dd95" class="outline-3">
-<h3 id="org815dd95"><span class="section-number-3">1.13</span> add conditionally to a map</h3>
+<div id="outline-container-org75ec59c" class="outline-3">
+<h3 id="org75ec59c"><span class="section-number-3">1.13</span> add conditionally to a map</h3>
 <div class="outline-text-3" id="text-1-13">
 <p>
 (merge base-map
@@ -440,8 +448,8 @@ similar to CL's `(:a 1 ,@(when foo `(:b 2)))
 </p>
 </div>
 </div>
-<div id="outline-container-orgc2554d1" class="outline-3">
-<h3 id="orgc2554d1"><span class="section-number-3">1.14</span> subsets</h3>
+<div id="outline-container-orgf484940" class="outline-3">
+<h3 id="orgf484940"><span class="section-number-3">1.14</span> subsets</h3>
 <div class="outline-text-3" id="text-1-14">
 <p>
 A set is a map with values equal to keys.
@@ -493,8 +501,8 @@ above, conversions between maps and sets work neatly.
 </div>
 </div>
 </div>
-<div id="outline-container-orgd9c59f8" class="outline-3">
-<h3 id="orgd9c59f8"><span class="section-number-3">1.15</span> Where did I leave that stuff?</h3>
+<div id="outline-container-org1b0785c" class="outline-3">
+<h3 id="org1b0785c"><span class="section-number-3">1.15</span> Where did I leave that stuff?</h3>
 <div class="outline-text-3" id="text-1-15">
 <p>
 So, I'm debugging something, and I use the inspector to retain some value I want for later.
@@ -515,7 +523,8 @@ you can go and fetch it from there.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2021-05-28 Fri 11:11</p>
+<p class="author">Author: Raimon Grau</p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.1 (<a href="https://orgmode.org">Org</a> mode 9.1.9)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
