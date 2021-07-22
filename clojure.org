@@ -164,7 +164,27 @@
    =cider-apropos myvar= will list you which ns have this defined. so
    you can go and fetch it from there.
 
-** array of hashes to hash
+** Array of hashes to hash
    #+begin_src clojure
      (map (juxt :id identity) [{:id 1 :name "foo"} {:id 2 :name "bar"}])
    #+end_src
+
+** Test private functions
+   If you want to test a private function, you can use the =binding=
+   (which is always accessible), and call it.
+
+   #+begin_src clojure
+     (ns a.b-test
+       (:use
+        [clojure test]))
+
+     (deftest a-private-function-test
+       (testing "a private function"
+         (let [fun #'a.b/c]
+           (is (not (fun nil))))))
+   #+end_src
+
+   ref and extended explanations: [[https://stackoverflow.com/questions/37471253/how-can-i-write-unit-tests-for-private-clojure-functions][in stackoverflow]].
+
+** managing exceptions in clojure
+   THere's some good discussion here [[https://clojureverse.org/t/how-are-clojurians-handling-control-flow-on-their-projects/7868][in clojurians]] thread.
