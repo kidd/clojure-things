@@ -188,3 +188,9 @@
 
 ** managing exceptions in clojure
    THere's some good discussion here [[https://clojureverse.org/t/how-are-clojurians-handling-control-flow-on-their-projects/7868][in clojurians]] thread.
+
+** mocking, stubbing, spying
+   - https://github.com/alexanderjamesking/spy
+   - https://engineering.fundingcircle.com/blog/2016/01/11/tdd-in-clojure/
+   - http://www.diva-portal.org/smash/get/diva2:806620/FULLTEXT01.pdf
+   - http://software-ninja-ninja.blogspot.com/2014/04/5-faces-of-dependency-injection-in.html
