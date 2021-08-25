@@ -1,1 +1,3 @@
 * Random stuff I'm trying with clojure
+  - https://kidd.github.io/clojure-things
+  - https://raimonster.com/clojure-things
