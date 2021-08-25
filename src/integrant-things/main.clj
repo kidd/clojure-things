@@ -8,7 +8,9 @@
 
 (def system-config
   {::a {::b (ig/ref ::b)}
-   ::b {}})
+   ::b {:f 1 :d 2}
+   ;::c {::d (ig/ref ::b)}
+   })
 
 (defmethod ig/init-key ::a
   [& args]
@@ -27,7 +29,9 @@
   [& args]
   (apply println args))
 
-(defn -main [a]
+(defn -main []
   (let [system (ig/init system-config)]
     (println "             initialized!")
+    (println "             " system)
     (ig/halt! system)))
+;; (-main)
