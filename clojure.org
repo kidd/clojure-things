@@ -103,12 +103,14 @@
 ** clojure by example
    https://news.ycombinator.com/item?id=27273911
 ** add conditionally to a map
+   #+begin_src clojure
   (merge base-map
      (when name
         {:name name})
      (when address
         {:address address}))
 
+   #+end_src
   similar to CL's `(:a 1 ,@(when foo `(:b 2)))
 ** subsets
    A set is a map with values equal to keys.
@@ -194,3 +196,389 @@
    - https://engineering.fundingcircle.com/blog/2016/01/11/tdd-in-clojure/
    - http://www.diva-portal.org/smash/get/diva2:806620/FULLTEXT01.pdf
    - http://software-ninja-ninja.blogspot.com/2014/04/5-faces-of-dependency-injection-in.html
+   - https://clojureverse.org/t/stuart-sierra-components-and-config/7996/7
+
+** Deploy a compojure+ring app
+   #+begin_src bash
+   lein new compojure hello-api-clj
+   cd hello-api-clj
+   lein ring uberjar
+   java -jar target/hello-api-clj-0.1.0-SNAPSHOT-standalone.jar
+   #+end_src
+
+   OR
+
+   #+begin_src bash
+   lein new compojure hello-api-clj
+   cd hello-api-clj
+   lein ring uberjar
+   java -jar target/hello-api-clj-0.1.0-SNAPSHOT-standalone.jar
+   #+end_src
+
+** Start a compojure app
+*** create
+    #+begin_src bash
+      lein new compojure my-stupid-app
+      lein ring server
+    #+end_src
+
+    lein-ring uses a fancy way to start the server, so you don't have
+    an easy entrypoint before the server is kicked (integrant?, mount?,
+    component?).
+
+*** repl
+    if you want to start the repl when =lein ring server=, add in
+    project.clj =:nrepl {:start? true}=.
+
+*** DB
+
+*** Migrations
+    Migratus provides the lib AND the lein plugin.
+
+    You have to add next.jdbc AND the concrete driver for your db
+    sqlite-jdbc in my case.
+
+    At this point to debug, I found that if you start from the console
+    with =lein ring server= even if there is a repl, the process
+    doesn't have the nrepl and cider helpers, so it's not really
+    useful as a repl to be used from emacs. Interim solution:
+    =cider-jack-in= and not have the server on.  Have to figure that
+    one asap.
+
+** integrant,mount,component. clojurians #off-topic 2021-08-07
+*** links
+   https://medium.com/@TheLaddersEng/stateful-components-in-clojure-part-2-897aa28112da
+*** main                                                           :noexport:
+cp4n  1:40 PM
+Question for those familiar with the "Clojure for Web Development" book: Is the second edition going to have a lot of outdated things that won't work or I should avoid now that there is a later edition? I bought the second edition and Brave and True at the same time recently and just have not gone far enough in my Clojure journey yet to get into the web dev stuff, so was curious about this. (edited)
+seancorfield  4:37 PM
+@cp4n I believe @yogthos changed a lot of things between the 2nd and 3rd editions but I don't know how "outdated" the 2nd ed would be overall. Let me open up the 3rd ed and see if that's covered in the preface...
+4:40
+...hmm, there is no information in the 3rd ed about what changed, sorry.
+seancorfield  4:42 PM
+The Luminus template doesn't list changes made to it either (in any useful detail).
+3 replies
+Last reply 12 days agoView thread
+cp4n  4:42 PM
+Thanks for checking. I read often that Clojure is pretty good when it comes to maintaining backward compatibility, although I know that sometimes libraries fall out of style or become unmaintained. I think maybe I'll just poke around to see if people are stilling doing things a certain way and if not just look at it as an example and not invest a lot in that section (edited)
+4:43
+... or if anything just get the newer book!
+seancorfield  4:44 PM
+My opinion on Luminus is that it is not a good choice for new-to-Clojure folks because there are so many "moving parts" and if something "breaks" as you're working through the book, it's hard for beginners to debug what they did wrong -- and also often very hard for people here to help them (because, again, so many interacting libraries that it's hard to know how to direct them in debugging anything).
+cp4n  4:46 PM
+That's good to know. Is there a community preference in libraries for web apps that are more bare-bones so might be forgiving and beginner friendly?
+seancorfield  4:55 PM
+A lot of people recommend just building something with Ring + Compojure (or Ring + reittit) to understand how requests, responses, and routing work in Clojure web apps.
+4:56
+Also look at my usermanager example https://github.com/seancorfield/usermanager-example/ (Ring + Compojure + Component + Selmer + next.jdbc) and the version linked from the README that swaps our Compojure and Component for reitit and Integrant.
+4:58
+Once you understand how all those pieces fit together and work with each other, you can take a look at Luminus -- but it adds a lot more libraries on top (and uses Mount, which I think is a terrible choice compared to Component or Integrant, because Mount uses global state).
+cp4n  4:59 PM
+This is great, thank you very much
+Cora  6:59 PM
+(I always throw this in here but I like mount lol)
+7:00
+also I rather like this compojure template https://github.com/yogthos/compojure-template
+Cora  7:07 PM
+I think this pretty well explains my preference for mount https://github.com/tolitius/mount/blob/master/doc/differences-from-component.md
+dgb23  7:09 PM
+mount seems to be super repl friendly
+Cora  7:09 PM
+I like the feel of mount, which is one of those things that really doesn't make a good argument and can't really be argued against either
+7:11
+it feels less claustrophobic, it doesn't gets its tentacles in everywhere
+7:11
+I work with component and integrant but on personal projects it's mount-only
+dgb23  7:11 PM
+I think I get what you mean. It doesn’t seem to have you wire things up together upfront. Althrough I’m not entirely sure if the alternatives do that, but they seem that way.
+Cora  7:14 PM
+mount just lets clojure do the wiring
+7:16
+I'm also careful to not reach out to mounted components from random places all over the app and instead pass everything in, so only some top-level namespace is pulling together components and combining them to perform actions
+7:18
+but I only have written code for component and integrant for existing systems I didn't write
+7:18
+so it feels like a lot of indirection to me
+jjttjj  7:18 PM
+Yeah I think it's a personal thing, but I've always personally found it a little awkward to think in terms of the component library, but that seems like a sort of unpopular opinion in the Clojure world. https://github.com/riverford/objection has been a personal favorite of mine, but I was thinking recently about taking another look at mount.
+riverford/objection
+A dynamic approach to application components
+Stars
+57
+Language
+Clojure
+Added by GitHub
+Darin Douglass  7:21 PM
+i started with mount, was bit by the "always start everything loaded" behavior of mount, went to mount-lite because you can explicitly define relationships between the states in your system which meant only what you wanted would be started, then landed on redelay as my current goto https://github.com/aroemers/redelay
+
+    slim state definitions like mount
+    everything starts up automatically when needed
+
+(edited)
+aroemers/redelay
+Clojure library for first class lifecycle-managed state.
+Stars
+37
+Language
+Clojure
+Added by GitHub
+Cora  7:25 PM
+that's interesting
+7:25
+there are a lot more of these libraries than I thought
+Cora  7:26 PM
+you can start only parts of a mount application if you want: https://github.com/tolitius/mount#start-and-stop-parts-of-application
+tolitius/mount
+managing Clojure and ClojureScript app state since (reset)
+Stars
+1073
+Language
+Clojure
+Added by GitHub
+2 replies
+Last reply 12 days agoView thread
+emccue  7:27 PM
+I'm still a rebel, manually starting stuff in order and manually making a system map
+7:28
+Which I feel is a better thing to teach
+7:29
+Since all the libraries around stateful stuff basically accomplish that manual task with some degree of automation
+Cora  7:31 PM
+going to slap a big "it depends" sticker on that one
+7:31
+probably depends on what you're teaching
+7:31
+but you definitely learn more that way
+7:31
+overall
+emccue  7:31 PM
+So recognizing that task as a concrete thing would let people recognize the benefits and tradeoffs of the various libs
+7:32
+Instead of "use component. Okay now you need a record. Okay now you need to implement this protocol. Now you need to construct a prestarted map. Now you need to make a logical interface to the component"
+Cora  7:33 PM
+in the spirit of off-topic: I really need a nap
+emccue  7:33 PM
+It's "pass stateful things as arguments, destructure from a larger map to accomplish dependency injection"
+7:34
+Followed by "okay now here are your options if you need to have dependency injection for starting these stateful components"
+seancorfield  7:56 PM
+And nowadays you don't need a record for Component, and if you have no dependencies, a Component doesn't even need to be a map.
+9 replies
+Last reply 11 days agoView thread
+walterl  8:01 PM
+Having used Duct (Integrant) on a fairly large web app for a while now, I've come to see Integrant as a more idomatic Clojure implementation of the idea presented by Component by virtue of using multimethods for starting/stopping (as opposed to OOP-y interface methods), and a more declarative system config (just a map). That said, passing a system map (or subsets thereof) around everywhere has proven to be not great. We're now looking at alternatives which accepts the reality that for most of these things ns-global state is just fine, and a whole lot simpler to work with. Mount looks like it could hit a sweet spot. (edited)
+34 replies
+Last reply 11 days agoView thread
+dpsutton  8:13 PM
+I’ve never worked on such a codebase but I think I would prefer component. Seems like it is the only way to have multiple services in the same jvm.
+3 replies
+Last reply 12 days agoView thread
+dpsutton  8:13 PM
+Could test multiple instance behavior in the same jvm which I would love
+8:14
+But I haven’t felt the dev annoyance at how to call functions in a namespace that expect dependencies
+sova-soars-the-sora  8:22 PM
+Hey people who like computers and CS... I found something nifty today.
+https://papertime.app/
+papertime.apppapertime.app
+Paper Time - tune in to CS Research
+Browse the latest Computer Science papers in Arxiv, and hear their Abstracts like a podcast.
+sova-soars-the-sora  8:30 PM
+The ivory-tower equivalent of tea time... Paper Time! :smiley:
+Cora  8:53 PM
+doesn't mount have yurt for multiple mount systems in a single system?
+1 reply
+12 days agoView thread
+Cora  8:55 PM
+seems so
+hiredman  11:09 PM
+Something to keep in mind is that differences document is written by mount
+11:11
+And parts of it are just nonsense (component requiring whole app buy in)
+11:13
+It has been my opinion since first an encountering mount that mount is just global state with extra bells and whistles that make you think you are doing something more sophisticated than (def something (atom {}))
+11:14
+But it is basically just defing global state like that, and while I haven't used mount, before mount existed I did work in a large clojure codebase that had just kind of grown organically and kept state it global def'ed atoms and similar
+11:15
+I have 0 desire to go back to anything close to that, and strongly advise avoiding building your apps like that
+seancorfield  11:18 PM
+It was the path we went down at World Singles Networks in the early days because it was "easy" and we were new to Clojure. It's a decision we are still digging ourselves out from under. We adopted Component incrementally (so, yeah, that "whole app buy-in" criticism is nonsense) and where we've been able to completely remove those global state def's the code has been so much easier to work with and maintain. Mount sounds "easy" compared to Component or Integrant but it's a bad architecture choice as far as I'm concerned. I would never make that mistake again.
+Cora  11:27 PM
+it's not just (def something (atom {})) , though. it relies on the require order to define the start and stop order, sure, but it has things for starting and stopping only parts of the app, starting with swapped out components, and starting with swapped out start/stop functions, and even starting multiple systems if you pull in yurt. it doesn't seem like it's the thing it's being accused of being
+27 replies
+Last reply 12 days agoView thread
+dgb23  11:28 PM
+Also there seems to be a clear way of seeing what is running
+Cora  11:30 PM
+I still pass everything around like I'm using a with-open or something, and maybe that's why it's so confusing to me why it's so disliked. I wouldn't want my functions reaching out for global shared state like that I'd still want it passed in
+vemv:hammock:  1:42 AM
+How would you call a word/term that is thrown around without much backing reasoning?e.g. sometimes people say things like "this looks unscalable to me" or complex, magical, etcblanket statement seems close but it has a distinct meaningshallow dismissal also is close but I'm targeting the use of just one word. It bothers me because you can't just use a word and call that a piece of argumentation :)
+15 replies
+Last reply 10 days agoView thread
+tolitius  1:55 AM
+great discussion as always, a bit more opinionated that it could have been, but that only means we did something right :)
+one thing I’d like to point out to people who is afraid of “a global state without giving a context”:
+
+    your data store is a global state
+    your I/O is a global state
+    your message broker is a global state
+
+etc.
+all these usually have mechanisms to deal with it: data stores have transactions, I/O is usually based on file handles and OS tooling, message brokers use internal queues, etc.
+no need to hide behind an illusion that you are not using global state because of hypothetical dogmayou like component to manage state and it works for you? great!
+integrant? even better!
+clip? all the power to you!
+for the last few years we have built not one, but several large systems with mount that are happily living in production and helping humans to live a better life. so our experience is as good as yoursas to strong opinions, don’t let them discourage you, especially if you are a beginner. start with nothing or go try many, it all depends on how you learn. Clojure community is so tiny and all this “strong opinions” about a library just make it even tinier
+I propose we grow vs. shrink
+3 replies
+Last reply 12 days agoView thread
+Timur Latypoff  9:44 AM
+From my experience, leiningen, mount and compojure are much easier to start with rather than tools.deps, integrant and reitit. For the scopes of relatively small projects I make (focused on delivering useful features rather than engineering perfection or large dev team coordination), the “easy” things work just fine and save me from a lot of learning.When the projects make enough money to justify hiring a team of Clojure devs, surely we’d spend a couple of weeks on gradually improving the tooling and library choices. (edited)
+slipset  8:22 AM
+I’m on vacation this week, but I’m sort of planing to write a series of blog posts on my experience with Component, or rather dependency injection. The gist of this series is that there seems to be a, shock, trade-off, here :slightly_smiling_face: In the early days of ardoq, more or less every interesting fn received system as its first argument. Which is great, as it can now do whatever it wants. It’s also horrible, because, it can do whatever it wants. Then (just before my arrival at ardoq) we started a move where each service received it’s corresponding Component as the first argument so (foo-service/bar (:foo-service @system) …) which, IMO, was better because you could now reason more clearly about what bar did, since it only had access to its part of the sysemNow, ardoq being a multi-tenant system, each request runs in a, you guessed it, context which would include the user and the corresponding customer (which we call organization) data-store. This lead to the introduction of a ctx which is a simple map which held just these two values. It has since grown, but not out of hand, so we started to call our functions in this way (foo-service/bar (:foo-service @system) (->context @system *current-user*)Now, most of our Components don’t do much more than write to the database, nor do they hold state, and for reasons, writing to the database involved more than just writing to the database, so there were a couple of other Components needed when mutating. But when foo-service wrote some stuff to the database, maybe bar-service also needed to write some stuff, so FooService then had a dependency on BarServiceAll this to say that at ardoq, we currently have a bunch of Components which do nothing more than hide implementation details, like when creating a new (customer) org, we pass (:org-service @system) and the caller doesn’t know/care what kind of side effects org-service might cause when creating an org (think send email, stick stuff in database, stick stuff in queues, talk to other services). This may be good, and this may be bad.Another thing is that some Components hold config, because stuff that could have been stateful, like connections to external services, are often just done over rest (ElasticSearch comes to mind), so they are not “real” Components with lifecycles, since the configs are static over the runtime of the app.Anyways, I’ll try to be more clear in a series of blog posts on this. (edited)
+**** thread
+     walterl Aug 7th at 8:01 PM
+ Having used Duct (Integrant) on a fairly large web app for a while now, I've come to see Integrant as a more idomatic Clojure implementation of the idea presented by Component by virtue of using multimethods for starting/stopping (as opposed to OOP-y interface methods), and a more declarative system config (just a map). That said, passing a system map (or subsets thereof) around everywhere has proven to be not great. We're now looking at alternatives which accepts the reality that for most of these things ns-global state is just fine, and a whole lot simpler to work with. Mount looks like it could hit a sweet spot. (edited)
+ 34 replies
+ drewverlee  12 days ago
+ Couldn't just an atom be used for global state?
+ walterl  12 days ago
+ That's the idea for many of the cases, but sometimes you want some coordination.
+ walterl  12 days ago
+ That's where I suspect mount may offer that little bit extra
+ emccue  12 days ago
+ I still stand by recognizing stateful components as a distinct thing as having benefit. At work we don't pass db in to every persistence call and its okay - not my taste, but okay
+ emccue  12 days ago
+ you have to remember that like every node.js project has some nonsense like
+
+ export const sequelize = new Sequelize();
+
+ emccue  12 days ago
+ and its fine, mostly. Not great for a large codebase that grows in the direction of having many service-like things and not great for interactive development (edited)
+ emccue  12 days ago
+ but they don't do that anyways, so :shrug:
+ walterl  12 days ago
+ Passing around component maps that need to be used 3 calls down from a given component is really not great either. :sweat:
+ vemv:hammock:  12 days ago
+
+     as opposed to OOP-y interface methods
+
+ there's some talk in which :rich: highlights interfaces as one of Java's finest constructs.I've worked/talked a fair bit with people averse to protocols/interfaces and more often than not their "repl-friendliness" argumentation is flawed (edited)
+ hiredman  12 days ago
+ The problem with multi methods is both interfaces and implementations of those interfaces have global scope
+ hiredman  12 days ago
+ So they are much more annoying to spin off a mock for in tests
+ hiredman  12 days ago
+ With protocols you can at any point spin off an anonymous implementation using reify
+ hiredman  12 days ago
+ I've not used duct, but before duct existed a project I worked on used a fork of component that replaced the protocols with multimethods, and that was my experience, annoying to write little one off implementations for tests
+ vemv:hammock:  12 days ago
+ oh now I wonder how to solve that if I were using Integrant. Sounds like a good puzzlewith-redefs or anything like that would be a no-go, I care about tests being parallelizable
+ drewverlee  12 days ago
+ @hiredman can you give a code example of what you mean here:
+
+     > With protocols you can at any point spin off an anonymous implementation using reify
+
+ emccue  11 days ago
+
+ (defmulti thing type)
+
+ (defmethod thing String [s] 8)
+
+ (defprotocol Thinger (thing-2 [_]))
+ (extend-protocol Thinger String (thing-2 [_] 8))
+
+ (deftype DummyType [])
+
+ (defmethod thing DummyType [_] 1)
+
+ (reify Thinger (thing-2 [_] 1))
+
+ emccue  11 days ago
+ if you are just dispatching on type you can still pull it off, but you need a new named type for each implementation
+ emccue  11 days ago
+ with protocols/interfaces and reify you can make a lot more in a more "lightweight" way
+ emccue  11 days ago
+ and depending on the exact dispatch mechanism of the multimethod it might be harder to make fake impls
+ walterl  11 days ago
+ @hiredman is completely right about replacing objects in Integrant systems. It's possible, but gets messy quickly: changing component A's referenced component B with a testing one T is as simple as updating A's config map entry. But that only swaps out B for A. All other components that use B will still be referencing B, and not T.A possible solution is to have a proxy ("interface") component B' that other components (like A) reference, and which substitutes either B or T, but now you have an inheritance hierarchy of components, and need to keep track of a list of "don't use directly" components. :persevere:
+ walterl  11 days ago
+ Will need to check if mount has a solution for that problem.
+ hiredman  11 days ago
+ Mount wires together via cars in namespaces
+ hiredman  11 days ago
+ Vars
+ hiredman  11 days ago
+ So you cannot have multiple implementations or a single implementation instantiated multiple times parameterized differently
+ walterl  11 days ago
+ Yeah, but the problem could persist, depending on when references are resolved.
+ emccue  11 days ago
+ and i think you can all maybe start to see why i just have a function that makes the whole map
+ emccue  11 days ago
+ less think, more explicit
+ walterl  11 days ago
+ @emccue Will that address replacing all refs to a given component with another one? It's not apparent to me.
+ emccue  11 days ago
+ yeah, since you make the map explicitly
+ emccue  11 days ago
+
+ (defn make-real-system []
+   (let [b (b/make-b)
+         a (a/make-a b)]
+     {:a a
+      :b b}))
+
+ emccue  11 days ago
+
+ (defn make-test-system []
+   (let [t (t/make-t)
+         b (b/make-b)
+         a (a/make-a t)]
+     {:a a
+      :b b}))
+
+ emccue  11 days ago
+ right?
+ emccue  11 days ago
+ since you are biting the cost of explicitly writing stuff out, you don't have the restrictions imposed by the generalized mechanisms
+ walterl  11 days ago
+ Yeah, that'll do it. It strikes me as very similar to the intermediate component B' I mentioned above. Will have to think about it further.
+**** thread2
+     slipset Aug 9th at 8:22 AM
+ I’m on vacation this week, but I’m sort of planing to write a series of blog posts on my experience with Component, or rather dependency injection. The gist of this series is that there seems to be a, shock, trade-off, here :slightly_smiling_face: In the early days of ardoq, more or less every interesting fn received system as its first argument. Which is great, as it can now do whatever it wants. It’s also horrible, because, it can do whatever it wants. Then (just before my arrival at ardoq) we started a move where each service received it’s corresponding Component as the first argument so (foo-service/bar (:foo-service @system) …) which, IMO, was better because you could now reason more clearly about what bar did, since it only had access to its part of the sysemNow, ardoq being a multi-tenant system, each request runs in a, you guessed it, context which would include the user and the corresponding customer (which we call organization) data-store. This lead to the introduction of a ctx which is a simple map which held just these two values. It has since grown, but not out of hand, so we started to call our functions in this way (foo-service/bar (:foo-service @system) (->context @system *current-user*)Now, most of our Components don’t do much more than write to the database, nor do they hold state, and for reasons, writing to the database involved more than just writing to the database, so there were a couple of other Components needed when mutating. But when foo-service wrote some stuff to the database, maybe bar-service also needed to write some stuff, so FooService then had a dependency on BarServiceAll this to say that at ardoq, we currently have a bunch of Components which do nothing more than hide implementation details, like when creating a new (customer) org, we pass (:org-service @system) and the caller doesn’t know/care what kind of side effects org-service might cause when creating an org (think send email, stick stuff in database, stick stuff in queues, talk to other services). This may be good, and this may be bad.Another thing is that some Components hold config, because stuff that could have been stateful, like connections to external services, are often just done over rest (ElasticSearch comes to mind), so they are not “real” Components with lifecycles, since the configs are static over the runtime of the app.Anyways, I’ll try to be more clear in a series of blog posts on this. (edited)
+ 8 replies
+ vemv:hammock:  10 days ago
+
+      It’s also horrible, because, it can do whatever it wants
+
+ It's kind of a grey zone, isn't it? No opinion from my side. Maybe I see some analogy between receiving a whole system and receiving a whole "app state" in a reactive frontend app
+ slipset  10 days ago
+ Deffo a grey zone, both good and bad :slightly_smiling_face:
+ dgb23  10 days ago
+ I think these discussions are important, they touch on concepts like “onion architecture”, “imperative shell, functional core” and “out of the tar pit”.
+
+ I think it’s important and enlightening read about practical applications of these general patterns and varying degrees of success and practicality!
+ slipset  10 days ago
+ I’d second that, and that’s part of my motivation to write the series. No critique of the community, but I think we’re lacking (might be my lack of looking) examples of how applications are made. We have good examples of how to write libraries, but as apps tend to be closed source, it’s harder to gain insights into what the current patterns are.
+ dgb23  10 days ago
+ In terms of web development there is a lot of activity around leiningen, luminus, fulcro, ref-frame, reagent etc. and different example projects, templates, tutorials and so on that touch on how to wire things together and how to leverage Clojure and the REPL. But I know what you mean. When it comes to the nitty gritty there are many things to learn and mistakes to be made.
+ emccue  10 days ago
+ At least to me, taking the whole system map is something that is analogous to @Autowire or whatever other dependency injection thing. The only difference between @Autowire SomeSystem someSystem; in a spring controller class and {:keys [some-system]} in a handler function is that in clojure you have the ability to opaquely take the whole map and pass it down further. if you can avoid that - and can clearly see the defined dependencies at usage site - then it shouldn't be an issue
+ walterl  10 days ago
+
+     ... so FooService then had a dependency on BarService
+
+ Sounds a lot like the situation we have.If BarService depends on BazService, how do you ensure that FooService receives BazService (to pass along to BarService)?
+ walterl  10 days ago
+
+     I think these discussions are important...
+
+ Yes! I've definitely learned from this, and feel like I understand the trade-offs better. Thanks to all contributors! (edited)
+
+* clojure exceptions
+  - https://grishaev.me/en/clj-book-exceptions/
+
+* logging
+  timbre/log provides also =spy= and other cool stuff
+
+* cider-apropos is super useful
