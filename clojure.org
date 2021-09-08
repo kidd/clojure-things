@@ -197,6 +197,8 @@
    - http://www.diva-portal.org/smash/get/diva2:806620/FULLTEXT01.pdf
    - http://software-ninja-ninja.blogspot.com/2014/04/5-faces-of-dependency-injection-in.html
    - https://clojureverse.org/t/stuart-sierra-components-and-config/7996/7
+   - https://slipset.github.io/posts/dependency-injection-perhaps
+   - https://slipset.github.io/posts/config
 
 ** Deploy a compojure+ring app
    #+begin_src bash
@@ -216,6 +218,13 @@
    #+end_src
 
 ** Start a compojure app
+   There are multiple templates,
+   - https://github.com/yogthos/compojure-template/
+   - https://practical.li/clojure-webapps/server-side-api/compojure-api-template.html
+   - https://github.com/weavejester/compojure-template
+     ...
+
+     I'm going for compojure-template for now. No reason why, really.
 *** create
     #+begin_src bash
       lein new compojure my-stupid-app
@@ -229,6 +238,19 @@
 *** repl
     if you want to start the repl when =lein ring server=, add in
     project.clj =:nrepl {:start? true}=.
+
+    lein ring server imports ring and ring-server/ring-server, which
+    run the jetty server for you on start
+    https://github.com/weavejester/lein-ring/blob/master/src/leiningen/ring/server.clj#L34-L35
+
+    But if you want control over it, add [ring "1.9.4"] explicitly to
+    your project.clj, start with cider-jack-in, and in the main ns,
+
+    #+begin_src clojure
+      (use 'ring.adapter.jetty) ; if you don't require [ring ..] this is not available
+      (defonce server (run-jetty #'app {:port 3000 :join? false}))
+      (.stop server)
+    #+end_src
 
 *** DB
 
@@ -244,6 +266,8 @@
     useful as a repl to be used from emacs. Interim solution:
     =cider-jack-in= and not have the server on.  Have to figure that
     one asap.
+
+
 
 ** integrant,mount,component. clojurians #off-topic 2021-08-07
 *** links
@@ -581,4 +605,62 @@ I’m on vacation this week, but I’m sort of planing to write a series of blog
 * logging
   timbre/log provides also =spy= and other cool stuff
 
-* cider-apropos is super useful
+* queryable runtime. "inspectability"
+  cider-apropos is super useful
+  #+begin_src clojure
+  (apropos "rename-keys")
+  (clojure.set/rename-keys)
+
+  (doc clojure.test)
+  (find-doc "dynamic")
+  #+end_src
+  #+begin_example
+  for instance, this is our production jar:
+  MB_JETTY_PORT=3006 java -Dclojure.server.repl="{:port 50506 :accept clojure.core.server/repl}" -jar 0.40.0.jar
+  and then just a simple
+
+  % nc localhost 50506
+  user=> (apply require clojure.main/repl-requires)
+  nil
+  user=> (apropos "union")
+  (clojure.set/union)
+  user=> (apropos "password")
+  (clj-ldap.client/modify-password metabase.api.session/GET_password_reset_token_valid metabase.api.session/POST_forgot_password metabase.api.session/POST_reset_password metabase.api.user/PUT_:id_password metabase.api.util/POST_password_check metabase.driver.common/default-password-details metabase.email/email-smtp-password metabase.email.messages/send-password-reset-email! metabase.integrations.ldap/ldap-password metabase.integrations.ldap/verify-password metabase.models.database/protected-password metabase.models.user/form-password-reset-url metabase.models.user/set-password! metabase.models.user/set-password-reset-token! metabase.public-settings/enable-password-login metabase.public-settings/password-complexity metabase.util.password/active-password-complexity metabase.util.password/common-passwords-url metabase.util.password/verify-password)
+  user=>
+  #+end_example
+  #+begin_example
+  I once wondered how many things were added to clojure.core over the versions. After cloning the Clojure repo, and doing weird regex checks across history in git, I realised I could just do this:
+
+user=> (->> (vals (ns-publics 'clojure.core))
+  #_=>      (keep (comp :added meta))
+  #_=>      (frequencies)
+  #_=>      (sort-by #(Long/parseLong (subs (key %) 2)))
+  #_=>      (run! println))
+[1.0 434]
+[1.1 38]
+[1.2 45]
+[1.3 16]
+[1.4 8]
+[1.5 11]
+[1.6 8]
+[1.7 19]
+[1.8 1]
+[1.9 27]
+[1.10 8]
+
+That's when I started to really "get" the value of the queryability. I then understood how easily I could implement my own version of clojure.repl/apropos.
+Edit: fixed the sorting. (edited)
+  #+end_example
+
+* clojure internals
+  - https://aphyr.com/posts/305-clojure-from-the-ground-up-macros
+  - https://lambdaisland.com/blog/2021-08-25-classpath-is-a-lie
+  - http://blog.kdgregory.com/2016/05/how-and-when-clojure-compiles-your-code.html
+  - https://www.youtube.com/watch?v=2SGFeegEt9E <- decompilation
+  - https://dev.to/dpsutton/exploring-the-core-cache-api-57al
+
+* data-driven
+  - https://www.youtube.com/watch?v=IZlt6hH8YiA
+  - https://www.youtube.com/watch?v=kuNxVXnmjHA
+  - https://www.youtube.com/watch?v=zznwKCifC1A
+  - https://www.youtube.com/watch?v=WtdegIqQbrg
