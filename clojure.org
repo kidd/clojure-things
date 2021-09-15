@@ -191,7 +191,7 @@
 ** managing exceptions in clojure
    THere's some good discussion here [[https://clojureverse.org/t/how-are-clojurians-handling-control-flow-on-their-projects/7868][in clojurians]] thread.
 
-** mocking, stubbing, spying
+** mocking, stubbing, spying, integrant...
    - https://github.com/alexanderjamesking/spy
    - https://engineering.fundingcircle.com/blog/2016/01/11/tdd-in-clojure/
    - http://www.diva-portal.org/smash/get/diva2:806620/FULLTEXT01.pdf
@@ -271,7 +271,8 @@
 
 ** integrant,mount,component. clojurians #off-topic 2021-08-07
 *** links
-   https://medium.com/@TheLaddersEng/stateful-components-in-clojure-part-2-897aa28112da
+    - https://medium.com/@TheLaddersEng/stateful-components-in-clojure-part-2-897aa28112da
+   - https://medium.com/@TheLaddersEng/stateful-components-in-clojure-part-1-6e819f51db14
 *** main                                                           :noexport:
 cp4n  1:40 PM
 Question for those familiar with the "Clojure for Web Development" book: Is the second edition going to have a lot of outdated things that won't work or I should avoid now that there is a later edition? I bought the second edition and Brave and True at the same time recently and just have not gone far enough in my Clojure journey yet to get into the web dev stuff, so was curious about this. (edited)
@@ -658,9 +659,17 @@ Edit: fixed the sorting. (edited)
   - http://blog.kdgregory.com/2016/05/how-and-when-clojure-compiles-your-code.html
   - https://www.youtube.com/watch?v=2SGFeegEt9E <- decompilation
   - https://dev.to/dpsutton/exploring-the-core-cache-api-57al
+  - https://worace.works/2021/04/13/jar-hell-part-2-jvm-deployment-strategies/
+  - https://www.deepbluelambda.org/programming/clojure/how-clojure-works-a-simple-namespace
+  - https://www.deepbluelambda.org/programming/clojure/how-clojure-works-namespace-metadata
+  - https://leiningen.org/reference.html
 
 * data-driven
   - https://www.youtube.com/watch?v=IZlt6hH8YiA
   - https://www.youtube.com/watch?v=kuNxVXnmjHA
   - https://www.youtube.com/watch?v=zznwKCifC1A
   - https://www.youtube.com/watch?v=WtdegIqQbrg
+
+* simple stu halloway
+  - https://www.youtube.com/watch?v=cidchWg74Y4 simplicity ...
+  - https://www.youtube.com/watch?v=f_Fi8YXt2fs
