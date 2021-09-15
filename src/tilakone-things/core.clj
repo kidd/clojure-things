@@ -1,6 +1,11 @@
 (ns tilakone-things.core
   (:require [tilakone.core :as tk :refer [_]]))
 
+;; https://github.com/ftravers/rum-sample/blob/0dcbc7ef33c2ea210c7dde6308ef65ee1f5c5264/test/rum_sample/word_assoc/game_state_test.cljc#L7
+;; https://github.com/rgm/experiments/blob/e4e233e41e8075b25db89fc6a2defc48b03cd4c2/2019/201908-tilakone-reframe/src/frontend/rgm/fsm.cljs
+;; https://github.com/maochaokuo/clojureFSMexamples/blob/ae307ac82fbae8ec60523c860b4bf6d6fca242fd/src/test_intellijcommunity2/light_machine.clj
+;; https://github.com/ftravers/rum-sample/blob/0dcbc7ef33c2ea210c7dde6308ef65ee1f5c5264/src/rum_sample/word_assoc/game_state.cljc
+;; https://github.com/rgm/experiments/blob/e4e233e41e8075b25db89fc6a2defc48b03cd4c2/2019/201908-tilakone/src/user.clj
 
 
 (defn inc-val [val & _]  (inc val))
