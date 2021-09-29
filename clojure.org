@@ -152,9 +152,10 @@
      {:a 1} (into {} [[:a 1]]); {:a 1}{:a 1}
    #+end_src
 
-   To check for presence of required keys as parameters, it's very
-   easy and "apl-ish" =(set/subset? (set [:first-name :last-name
-   :company]) (:params request))=
+   Instead of checking =#(every? (partial contains? %) [:a :b]) vs
+   #(set/subset? #{:a :b :c} %)= To check for presence of required
+   keys as parameters, it's very easy and "apl-ish" =(set/subset? (set
+   [:first-name :last-name :company]) (:params request))=
 
 ** Where did I leave that stuff?
    So, I'm debugging something, and I use the inspector to retain some value I want for later.
@@ -192,6 +193,7 @@
    THere's some good discussion here [[https://clojureverse.org/t/how-are-clojurians-handling-control-flow-on-their-projects/7868][in clojurians]] thread.
 
 ** mocking, stubbing, spying, integrant...
+
    - https://github.com/alexanderjamesking/spy
    - https://engineering.fundingcircle.com/blog/2016/01/11/tdd-in-clojure/
    - http://www.diva-portal.org/smash/get/diva2:806620/FULLTEXT01.pdf
@@ -199,12 +201,25 @@
    - https://clojureverse.org/t/stuart-sierra-components-and-config/7996/7
    - https://slipset.github.io/posts/dependency-injection-perhaps
    - https://slipset.github.io/posts/config
+   - https://slipset.github.io/posts/all-your-base
+   - https://github.com/donut-power/system
 
-** Deploy a compojure+ring app
+** Start a compojure app
+*** lein&ring info and tutorials
+    - https://www.baeldung.com/leiningen-clojure
+    - https://www.baeldung.com/clojure-ring
+    - https://medium.com/@daniel.oliver.king/getting-real-work-done-in-clojure-application-development-683c8129a313
+
+*** There are multiple templates,
+   - https://github.com/yogthos/compojure-template/
+   - https://practical.li/clojure-webapps/server-side-api/compojure-api-template.html
+   - https://github.com/weavejester/compojure-template
+     ...
+*** Deploy a compojure+ring app
    #+begin_src bash
    lein new compojure hello-api-clj
    cd hello-api-clj
-   lein ring uberjar
+   lein ring uberjar # lein uberjar without 'ring' leaves you at the repl
    java -jar target/hello-api-clj-0.1.0-SNAPSHOT-standalone.jar
    #+end_src
 
@@ -217,12 +232,11 @@
    java -jar target/hello-api-clj-0.1.0-SNAPSHOT-standalone.jar
    #+end_src
 
-** Start a compojure app
-   There are multiple templates,
-   - https://github.com/yogthos/compojure-template/
-   - https://practical.li/clojure-webapps/server-side-api/compojure-api-template.html
-   - https://github.com/weavejester/compojure-template
-     ...
+   If you were using tools.deps, there's no lein ring, or lein ring
+   uberjar,
+   https://practical.li/clojure-webapps/projects/banking-on-clojure/application-server-configuration.html
+   shows how to do it there.
+
 
      I'm going for compojure-template for now. No reason why, really.
 *** create
@@ -267,8 +281,28 @@
     =cider-jack-in= and not have the server on.  Have to figure that
     one asap.
 
+*** Migrations in prod
+    To run migrations at the start of the app, lein-ring has a config
+    :init and :destroy that run before and after loading the handler.
+    - https://prasans.info/use%20flyway%20with%20leiningen/
+    - https://devcenter.heroku.com/articles/clojure-web-application
+    - Clojure web development essentials (book)
 
-
+    It seems it's the de-facto recommended way, but I still can't see
+    how you would run it only on 1 of the deployed servers, or
+    rollback if the migration fails.
+*** uberjar
+    =lein ring uberjar= produces a jar that on start it actually runs
+    the jetty thing. =lein uberjar= leaves you in the repl.
+*** Security
+    http://rundis.github.io/blog/2015/buddy_auth_part1.html
+*** honeysql and next/jdbc
+*** deploy
+    - https://worace.works/2021/04/13/jar-hell-part-2-jvm-deployment-strategies/
+** Circleci 3part tutorial on duct, aws , terraform
+   - https://circleci.com/blog/build-a-clojure-web-app-using-duct/
+   - https://circleci.com/blog/package-a-clojure-web-application-using-docker/
+   - https://circleci.com/blog/deploy-a-clojure-web-application-to-aws-using-terraform/
 ** integrant,mount,component. clojurians #off-topic 2021-08-07
 *** links
     - https://medium.com/@TheLaddersEng/stateful-components-in-clojure-part-2-897aa28112da
@@ -606,6 +640,10 @@ I’m on vacation this week, but I’m sort of planing to write a series of blog
 * logging
   timbre/log provides also =spy= and other cool stuff
 
+
+* concat trap
+  - https://web.archive.org/web/20190925194705/http://chouser.n01se.net/apply-concat/
+  - https://stuartsierra.com/2015/04/26/clojure-donts-concat
 * queryable runtime. "inspectability"
   cider-apropos is super useful
   #+begin_src clojure
@@ -673,3 +711,37 @@ Edit: fixed the sorting. (edited)
 * simple stu halloway
   - https://www.youtube.com/watch?v=cidchWg74Y4 simplicity ...
   - https://www.youtube.com/watch?v=f_Fi8YXt2fs
+
+* cljs
+** storybook
+   https://dev.to/shaolang/storybook-js-with-shadow-cljs-2n6n
+* core.async
+  - https://www.youtube.com/watch?v=VrmfuuHW_6w&t=2s
+* java interop
+  - https://www.youtube.com/watch?v=bvI1BNgGp0k
+
+
+* tricky flatten
+  - https://web.archive.org/web/20190925194705/http://chouser.n01se.net/apply-concat/
+  - stuart sierra's clojure don'ts
+  -
+* modern clojurescript
+  - https://www.learn-clojurescript.com/section-2/lesson-13-interacting-with-javascript-data/
+  - https://davidvujic.blogspot.com/2021/09/clojurescript-amplified.html material-ui, storybook, aws amplify
+  -
+
+* clojure integrant and the like
+  - https://grishaev.me/en/clj-book-systems/#loss-of-keys
+  - https://circleci.com/blog/build-a-clojure-web-app-using-duct/
+  - https://www.karimarttila.fi/clojure/2020/09/07/clojure-integrant-exercise.html
+  - https://www.youtube.com/watch?v=1siSPGUu9JQ stuart sierra explains why protocols and components
+
+* holy lambda!
+  - lein new holy-lambda holy-lambda-example
+  - nix-shell -p aws-sam-cli
+  - aws login
+  - AWS_PROFILE=my_profile sam local invoke ExampleLambdaFunction --region eu-west-1
+  - AWS_PROFILE=my_profile sam local start-api --region eu-west-1
+  - AWS_PROFILE=my_profile sam deploy --guided --region eu-west-1
+  - http https://1232323abcd.execute-api.eu-west-1.amazonaws.com
+  - AWS_PROFILE=rgrau sam delete --region eu-west-1
