@@ -9,12 +9,15 @@
 (def system-config
   {::a {::b (ig/ref ::b)}
    ::b {:f 1 :d 2}
+   [:foo/bar ::a] {:a 1}
+   [:foo/baz ::a] {}
    ;::c {::d (ig/ref ::b)}
    })
 
 (defmethod ig/init-key ::a
   [& args]
-  (apply println args))
+  (apply println args)
+  args)
 
 (defmethod ig/halt-key! ::a
   [& args]
@@ -23,11 +26,18 @@
 (defmethod ig/init-key ::b
   [& args]
   (apply println args)
-  :b)
+  args)
 
 (defmethod ig/halt-key! ::b
   [& args]
   (apply println args))
+
+
+(defmethod ig/init-key ::c
+  [& args]
+  (apply println args)
+  ::c)
+
 
 (defn -main []
   (let [system (ig/init system-config)]
