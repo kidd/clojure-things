@@ -193,7 +193,8 @@
    THere's some good discussion here [[https://clojureverse.org/t/how-are-clojurians-handling-control-flow-on-their-projects/7868][in clojurians]] thread.
 
 ** mocking, stubbing, spying, integrant...
-
+   - https://www.youtube.com/watch?v=fgOfYyTeBaQ
+   - https://promesante.github.io/2021/04/28/clojure_repl_driven_development_part_1.html
    - https://github.com/alexanderjamesking/spy
    - https://engineering.fundingcircle.com/blog/2016/01/11/tdd-in-clojure/
    - http://www.diva-portal.org/smash/get/diva2:806620/FULLTEXT01.pdf
@@ -745,3 +746,81 @@ Edit: fixed the sorting. (edited)
   - AWS_PROFILE=my_profile sam deploy --guided --region eu-west-1
   - http https://1232323abcd.execute-api.eu-west-1.amazonaws.com
   - AWS_PROFILE=rgrau sam delete --region eu-west-1
+
+* web dev
+  - https://www.youtube.com/watch?v=M97jWSKoV3k
+
+
+
+
+* nested filtering, some, any , every , filter....
+  There's a weird nice relation between set/* functions, and using
+  sets as containers for keywords, that are evaluated as functions.
+
+  filter + comp + set seems powerful
+  #+begin_src clojure
+    (->> @evts (map json/decode) (filter (comp #{"invoice.payment_failed" "charge.failed"} #(get % "type"))))
+
+    (select-keys (->> @evts (map json/decode) (group-by #(get % "type"))) ["invoice.payment_failed" "charge.failed"])
+
+    (filter (comp #{"foo" "bar"} :id) [{:id "foo" :n 1 } {:id "bar" :n 2 } {:id "baz" :n 3 }])
+
+    (when (#{"charge.failed" "invoice.payment_failed"} (get {"type" "charge.failed"} "type"))
+      "yes")
+
+    (when (some #{"charge.failed" "invoice.payment_failed"} [(get {"type" "charge.failed"} "type")])
+      "yes")
+
+  #+end_src
+* list all implementations of a defmethod
+  #+begin_src clojure
+  (keys (.getMethodTable ig/init-key))
+  #+end_src
+
+* find all public methods of a namespace
+  #+begin_src clojure
+    (ns-publics *ns*)
+  #+end_src
+
+
+* cli and tools and deps
+  - https://www.youtube.com/watch?v=8aCO_wNuScQ
+* dependency injection
+  - https://www.evalapply.org/posts/which-clojure-codebases-to-read-how-and-why/
+  - https://www.yegor256.com/2014/10/03/di-containers-are-evil.html
+  - https://softwareengineering.stackexchange.com/questions/19203/what-are-the-benefits-of-using-dependency-injection-and-ioc-containers
+  - https://www.reddit.com/r/Clojure/comments/6e2o57/how_do_you_manage_global_configuration_options_in/
+  - https://yogthos.net/posts/2015-10-01-Compojure-API.html
+  - https://yogthos.net/posts/2015-12-05-LuminusComponents.html
+  - https://lambdaisland.com/blog/2018-02-09-reloading-woes
+  - https://slipset.github.io/posts/config
+  - https://kumarshantanu.medium.com/dependency-injection-with-clojure-using-dime-af57b140bd3f
+  - https://puredanger.github.io/tech.puredanger.com/2014/01/03/clojure-dependency-injection/
+  - https://www.juxt.pro/blog/abstract-clojure
+
+* clojure codebases
+  - https://www.evalapply.org/posts/which-clojure-codebases-to-read-how-and-why/
+  - https://github.com/dharrigan/startrek
+
+
+* REPL large objects
+  - profiles.clj
+  #+begin_src clojure
+        :global-vars {*print-length* 5
+                      *print-level* 5}
+
+  #+end_src
+  - overwrite default "to string"
+  #+begin_src clojure
+    (defmethod print-method martian.core.Martian [^martian.core.Martian v ^java.io.Writer w]
+    (.write w (str "#martian.core.Martian" (prn-str (select-keys v [:api-root])))))
+  #+end_src
+
+  In emacs you might still hit https://github.com/clojure-emacs/cider/issues/2856
+  #+begin_src elisp
+  (setq cider-repl-use-pretty-printing nil)
+  #+end_src
+
+
+* inspect last result in emacs
+  =m-x cider-inspect-last-result= or =m-x cider-inspect-expr *1=
