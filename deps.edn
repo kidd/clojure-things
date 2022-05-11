@@ -23,6 +23,7 @@
          ;; clj-http/clj-http                 {:mvn/version "3.12.3"}
          ;; clj-http-fake/clj-http-fake       {:mvn/version "1.0.4-SNAPSHOT"}
 
+         com.gfredericks/user.clj {:mvn/version "0.1.0"}
          ;; clojurewerkz/quartzite            {:mvn/version "2.1.0"}
          ;; https://www.demystifyfp.com/clojure/marketplace-middleware/creating-cron-jobs-in-clojure/
          ;; metamerge/metamerge               {:mvn/version "1.0.0"}

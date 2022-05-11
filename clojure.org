@@ -37,6 +37,7 @@
 ** deps.edn
    - http://www.futurile.net/2020/03/07/clojure-lein-dev-experience-and-repl-tools/
    - https://www.manueluberti.eu/programming/2018/11/14/deps-shadow-cljs/
+   - https://www.youtube.com/watch?v=8aCO_wNuScQ
 ** tutorials
     - cljs re-frame: https://www.youtube.com/user/VideosDanA
     - spa re-frame: https://www.youtube.com/watch?v=yVb8PS6a4Mk&t=666s
@@ -797,6 +798,7 @@ Edit: fixed the sorting. (edited)
   - https://kumarshantanu.medium.com/dependency-injection-with-clojure-using-dime-af57b140bd3f
   - https://puredanger.github.io/tech.puredanger.com/2014/01/03/clojure-dependency-injection/
   - https://www.juxt.pro/blog/abstract-clojure
+  - https://clojureverse.org/t/dependency-injection-in-clojure/1723/6
 
 * clojure codebases
   - https://www.evalapply.org/posts/which-clojure-codebases-to-read-how-and-why/
@@ -824,3 +826,97 @@ Edit: fixed the sorting. (edited)
 
 * inspect last result in emacs
   =m-x cider-inspect-last-result= or =m-x cider-inspect-expr *1=
+* packaging lein deps.edn
+  https://github.com/metosin/packaging-clojure-examples
+
+* forms
+  - http://inside-out.matt.is/
+  - https://github.com/tonsky/rum
+  - https://biffweb.com/p/demo-dev-in-prod
+
+* state machine to parse files
+
+  rgm 12:42 AM
+  I'm hunting for possible libraries or techniques for a
+kind of task that almost certainly has a googleable name, but I don't
+know it: I have plaintext e-mails coming in and want to act on their
+message bodies. They're not exactly parseable (ie. I don't think a
+grammar exists, so it doesn't feel like instaparse would work) and
+they'd be tedious to regex, though I suppose that might eventually
+work. Some parts of the body are (probably accidentally) TSV as a
+result of doing layout in plaintext.I guess I'm after ... some
+data-defined way to establish zones relative to consistent landmarks,
+and say, ok, use this regex on the line 2 lines later and give me the
+groups. I can imagine doing a bunch of this with drop-until landmark,
+etc. working at the level of a line-seq.But I'm wondering if there are
+good approaches for almost-structured data that operates above lines
+and regexes and seqs and below formal grammars and parsing.  hiredman
+
+
+12:50 AM a state machine 12:53 (reduce (fn [[state-name data] line]
+(case state-name ..do stuff with line and data based on the content of
+line and the value of state-name and return a possibly new state...))
+[:init {}] lines). like if you are in :init and see a blank line then
+move to :after-email-headers or whatever, if you are in
+:after-email-headers and you see the columns headers for the tsv then
+move to :accumulate-tsv, and in :accumulate-tsv add the lines to data
+until a line is blank
+
+* tap>
+  #+begin_src clojure
+    (-> {:q []}
+            (update :q conj "a")
+            (update :q conj "b"))
+
+    (def ml (atom {:q []}))
+    ;;(remove-tap clojure.pprint/pprint)
+    (add-tap #(swap! ml update :q conj %))
+    (loop [[hd & tl] [1 2 3]]
+      (tap> hd)
+      (when tl
+        (recur tl)))
+  #+end_src
+
+  get(dict, k)
+  update(dict, k, f, args**)
+  reset(dict, k, val, args**)
+  inc
+  update(d,'foo', inc)
+* clojure -Sdescribe
+  You'll see that there's
+
+* miniupdates in python
+  #+begin_src python
+    import copy
+    def update(d, k, f, *args):
+        _c=copy.deepcopy(d)
+        _c[k]=f(d[k], *args)
+        return _c
+
+    def myappend(a,v):
+        _a=a.copy()
+        _a.append(v)
+        return _a
+
+    d={'a': [1,2,3]}
+    update(d, 'a', myappend, 'hola')
+
+    def swap(f):
+        return lambda x,y: f(y,x)
+
+    def swap(f):
+        return lambda *args: f(*reversed(args))
+
+    list(update(d, 'a', swap(map), inc)['a'])
+
+  #+end_src
+
+* proj from scratche
+  - create deps.edn -> {:deps ...}
+  - nix-shell -p neil
+  - neil add build
+  - neil dep add com.github.seancorfield/honeysql
+  - 3 things to build an uberjar:
+    - (:gen-class) in the main
+    - def lib
+    - add :main 'clojaws.core
