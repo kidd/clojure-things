@@ -61,3 +61,16 @@
 
 (defn unique? [a]
   ((fork count = (comp count set)) a))
+
+
+(defn over [g h]
+  (fn
+    ([w]   (g (h w)))
+    ([a w] (g (h a) (h w)))))
+
+(deftest subscription-version-schema-test
+  (let [[version-id version-created-at & original-fields]
+        (db/describe "subscription_version")
+        cleanup
+        (fn [x] (map #(dissoc % :is_nullable :column_default) x))]
+    (is ((over = cleanup) original-fields (db/describe "subscription")))))
